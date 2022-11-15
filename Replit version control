@@ -1,12 +1,6 @@
 //  Begin : PSEUDOCODE  ///////////////////////////////
 /*
-Human Boss
-Construction/Industry Boss: LUDKOS: HUMANITY’S SCOURGE
-SIgnifies overpopulation, waste & the spread of humanity. (Destruction of the environment)
-
-Bosses of Human Creation
-Sewage Boss: SABBARET: SEWAGE EMPRESS
-Signifies plastic related pollution & other ocean impacting pollution events.
+//  Bosses or enemies listed in the boss statistics area below are deleted from this list.  //
 Overfarming Bosses: THE PIG : THE COW
 The twins: The Pig & The Cow. Signifies gluttony, overeating and inhumane /innificient meat production.
 Logging Boss: WEYERSHAUSEN : THE AX
@@ -36,7 +30,7 @@ Lets make this difficult to signify how pressing an issue climate change is.
 Example: After a battle the character can choose to rest and regain a random ammount of health. 
 Maybe an hour system? The player inputs how many hours they want to sleep for. The longer you sleep the more health you regain but the more chances there are of getting attacked by an enemy.
 
-Example system: 
+System: 
 1] Fight small enemies. Loot them for armor and weapons.
 2] Choice to search for more enemies or rest.
 3] Resting for very long regains lots of health but is very dangerous. Cap of 24 hours. Minimum of 2 hours.
@@ -60,6 +54,7 @@ What will we need.
 
 //  Bosses list & Accompanying factors  //
 /* 
+Chance: The accumulatory 100% for calculating which attacks are dealt. For example, if I had a 75% chance to punch and 25% chance to kick, i would be technically punching thrice as often as I kick in a fight.
 
 B O S S E S  O F  H U M A N I T Y
 *  LUDKOS: HUMANITY’S SCOURGE
@@ -213,6 +208,10 @@ Fusionaire's Greatsword      Damage: 1255
 
 
 */
+//  Looting: Generally increasing as the game goes on after a boss fight or an enemy fight you can choose to loot for supplies. A first counter dictates how many items you recieve. Example: 6 Items. A second counter decides if the loot is a weapon or one of the types of armor. Helmet, Pauldrons, Chestplate, Gauntlets, Greaves. A third counter decides which item to give for the corresponding type.
+//  Example: First Counter [2 items], Second Counter [Weapon, Gloves], Third Counter [Fossilized Pike, Earthburn Shoulderplate]  //
+//  We might remove the first counter and make it a constant, depending on the boss fought or enemies fought.  //
+//  Enemy List: First Enemy, Bosses, Enemies in between bosses.  //
 
 //  Foundations Library //*****************************
 #include <cmath>        //****************
