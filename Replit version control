@@ -1,0 +1,230 @@
+//  Begin : PSEUDOCODE  ///////////////////////////////
+/*
+Human Boss
+Construction/Industry Boss: LUDKOS: HUMANITY’S SCOURGE
+SIgnifies overpopulation, waste & the spread of humanity. (Destruction of the environment)
+
+Bosses of Human Creation
+Sewage Boss: SABBARET: SEWAGE EMPRESS
+Signifies plastic related pollution & other ocean impacting pollution events.
+Overfarming Bosses: THE PIG : THE COW
+The twins: The Pig & The Cow. Signifies gluttony, overeating and inhumane /innificient meat production.
+Logging Boss: WEYERSHAUSEN : THE AX
+Filled with and covered in weapons and machinery. SIgnifies deforestation.
+
+Bosses of Human Intervention
+Coal Boss: GLENNECORE : HIS GREAT EXCAVATOR
+Signifies coal production & use. Dangerous gas etc..
+Oil Boss: ARAMAT: MAKER OF THE WOUNDS OF THE EARTH
+Fires, leaks, soot & black smoke.
+
+Bosses of Fault
+Forest Fire Boss: TIGIAT: UNGOD OF FIRE
+Signifies warming of the planet & smoke. Destruction of wildlife.
+Storm boss: TIPAGIA: TYPHOON SUMMONER
+Signifies tsunamis, floods, extreme weather and drought to global warming and changing air currents.
+Nuclear War boss: THE THREAT : CUTANIS
+Signifies the threat of nuclear war. The ultimate end.  *///////////////////////////////////////////
+
+//  What next?  //
+/* 
+Character will have health points obviously. Enemies will have health points. The character can pick up stronger weapons through looting the bodies of small enemies and bosses.
+Small enemies: could be something like a sewage pile or a toxic gas cloud. a zombie etc...
+*  Turn based combat.
+*  Instead of healing, a rest option?
+Lets make this difficult to signify how pressing an issue climate change is.
+Example: After a battle the character can choose to rest and regain a random ammount of health. 
+Maybe an hour system? The player inputs how many hours they want to sleep for. The longer you sleep the more health you regain but the more chances there are of getting attacked by an enemy.
+
+Example system: 
+1] Fight small enemies. Loot them for armor and weapons.
+2] Choice to search for more enemies or rest.
+3] Resting for very long regains lots of health but is very dangerous. Cap of 24 hours. Minimum of 2 hours.
+4] After a certain ammout of enemies are killed [ counter ] the chances of a the first boss exponentionalluy increase.
+5] First boss fight. Chance to loot special/secret weapons etc...
+6] Repeat.
+7] Story elements are easy, the game always happens in order so we can do lore stuff aswell.
+
+What will we need.
+-  Loop statements for the base enemies. 
+  -  Including: Loop statements for turn based combat.
+  -  Looting function, randomizer/counter for weapons/tools.
+-  Health, Defence and attack elements for the player. Health and damage elements for enemies & bosses.
+-  4 levels of base enemies. [Inbetween boss fights and preluding the first boss]
+-  9 bosses with unique attacks and individual abilities. Stick away from functions as each of these battles will be different.
+-  Catalogue of secret & rare weapons aquired from killing bosses.
+-  Story elements, background lore, finishing & polishing etc...
+-  Everything (the game itself) held within an "if health" statement.
+-  Attributes the player collects after killing enemies or accomplishing things.
+*/
+
+//  Bosses list & Accompanying factors  //
+/* 
+
+B O S S E S  O F  H U M A N I T Y
+*  LUDKOS: HUMANITY’S SCOURGE
+Ludkos is the embodiement of overpopulation, waste, and humanity's innificiency. An avatar of our destruction of the environment through infrastructure. He was once a very strong entity, serving under INDUSTRALIS during the industrial revolution. Since then he has lost some of his ability, while the other entities rose in power over time.
+Health: 1000
+ATTACKS
+Infracrush 
+Ludkos swings his mechanical concrete fists at the player. 
+Damage: 95
+Chance: 85%
+Economis Shockwave
+Ludkos pummels the ground around him creating a deadly burst of shockwaves.
+Damage: 150
+Chance: 15%
+LOOT GIVEN
+-
+
+B O S S E S  O F  H U M A N  C R E A T I O N
+*  SABBARET: SEWAGE EMPRESS
+Sabbaret is a physical manifestation of microplastic related pollution & other ocean related destruction. She has been rising in power over the past hundreds of years and carries the appearance of a mutilated shark. Symbolically devastating the population of marine life like fish. Her mother is Tipigiat. A Boss of fault and one of the strongest polluters. 
+Health: 500
+ATTACKS
+Plastic whip 
+Sabbaret whips the player with serrated plastic wires. 
+Damage: 75
+Chance: 75%
+Garbage Patch
+Sabbaret manifests a conglomerate of acidic and toxic trash and attempts to drown the player.
+Damage: 100
+Chance: 25%
+LOOT GIVEN
+-
+
+*/
+
+/* 
+ARMOR SETS / TEMPLATE
+
+*  Chestplate//Breastplate/Aegis  3 Point/s
+*  Pauldron/Shoulderplate         2 Point/s
+*  Helmet/Helm//Headshield        2 Point/s
+*  Glove/Gauntlet                 1 Point/s
+*  Boots/Sabatons/Greaves         1 Point/s  Average Total: 9 Points
+
+////////////////////////////////////////////////////////////////////
+
+1 Concrete Armor
+*  Concrete Chestplate            2 Point/s
+*  Concrete Shoulderplate         1 Point/s
+*  Helmet/Helm//Headshield        1 Point/s
+*  Glove/Gauntlet                 1 Point/s
+*  Boots/Sabatons/Greaves         1 Point/s  Total: 6 Points
+
+
+2 Recycled Plastic Armor
+*  Recycled Plastic Aegis         3 Point/s
+*  Plastic Pauldrons              2 Point/s
+*  Recycled Plastic Helmet        2 Point/s
+*  Recycled Plastic Gauntlets     1 Point/s
+*  Recycled Plastic Boots         1 Point/s  Total: 9 Points
+
+3 Rotsuit Armor
+*  Rotsuit Breastplate            5 Point/s
+*  Rotsuit Shoulderplate          3 Point/s
+*  Rotsuit Headshield             3 Point/s
+*  Rotsuit Gloves                 1 Point/s
+*  Rotsuit Sabatons               2 Point/s  Total: 14 Points
+
+3 Bonesuit Armor
+*  Rotsuit Chestplate             5 Point/s
+*  Rotsuit Shoulderplate          4 Point/s
+*  Rotsuit Headshield             3 Point/s
+*  Rotsuit Gloves                 2 Point/s
+*  Rotsuit Greaves                2 Point/s  Total: 16 Points
+
+
+5 Black Diamond Armor
+*  Black Diamond Aegis            5 Point/s
+*  Black Diamond Pauldrons        5 Point/s
+*  Black Diamond Helm             5 Point/s
+*  Black Diamond Gauntlets        3 Point/s
+*  Black Diamond Greaves          3 Point/s  Total: 21 Points
+
+6 Obsidian Smoke Armor
+*  Obsidian Smoke Aegis           10 Point/s
+*  Obsidian Smoke Pauldrons       10 Point/s
+*  Obsidian Smoke Helm            10 Point/s
+*  Obsidian Smoke Gauntlets       5 Point/s
+*  Obsidian Smoke Greaves         5 Point/s  Total: 40 Points
+
+7 Earthburn Armor
+*  Earthburn Plate                20 Point/s
+*  Earthburn Shoulderplate        20 Point/s
+*  Earthburn Headshield           15 Point/s
+*  Earthburn Gloves               10 Point/s
+*  Earthburn Boots                10 Point/s  Total: 75 Points
+
+8 Basilisk's Armor
+*  Basilisk's Armor Aegis         25 Point/s
+*  Basilisk's Pauldrons           20 Point/s
+*  Basilisk's Helm                15 Point/s
+*  Basilisk's Gauntlets           15 Point/s
+*  Basilisk's Greaves             15 Point/s  Total: 90 Points
+
+
+9 Depleted Uranium Armor
+*  Depleted Uranium Chestplate    50 Point/s
+*  Depleted Uranium Shoulderplate 50 Point/s
+*  Depleted Uranium Armor Helmet  45 Point/s
+*  Depleted Uranium Gloves        30 Point/s
+*  Depleted Uranium Sabatons      30 Point/s  Total: 205 Points
+
+////////////////////////////////////////////////////////////////////
+
+      WEAPONS CATALOGUE
+////////////////////////////
+Club
+Dagger
+Axe
+Pike
+Sword
+Lance
+Warmace
+Longsword & Battleaxe
+Greatsword
+////////////////////////////
+\
+
+
+////////////////////////////////////
+Rebar Club                   Damage: 15    10,000-5,000
+Synthesized Alloy Dagger     Damage: 20    
+
+Plasmelt Dagger              Damage: 50    
+Plasmelt Rebar Axe           Damage: 65    
+
+Bone Pike                    Damage: 115   
+Crimsbone Sword              Damage: 125      
+
+Fossilized Pike              Damage: 250   
+Bonealloy Lance              Damage: 265   
+Hardsoot Warmace             Damage: 275    
+Infused Obsidian Sword       Damage: 300    
+
+Firetile Longsword           Damage: 444   
+Flamelog Battleaxe           Damage: 555    
+Stormsoot Warmace            Damage: 666   
+Fusionaire's Greatsword      Damage: 1255  
+////////////////////////////////////       
+
+
+
+*/
+
+//  Foundations Library //*****************************
+#include <cmath>        //****************
+#include <cstdlib>      //***********
+#include <ctime>        //*******
+#include <iostream>     //****
+#include <unistd.h>     //*
+using namespace std;
+///////////////////////////////////////////////////////
+int main() 
+{
+string username;
+cout<<"Welcome to The global warming game. Please enter your name: ";
+cin>>username;
+}
