@@ -221,9 +221,43 @@ Fusionaire's Greatsword      Damage: 1255
 #include <unistd.h>     //*
 using namespace std;
 ///////////////////////////////////////////////////////
+int enemy (int hp, int edpa, string enemyname, int hp2, int dpa, int armour, string username);
 int main() 
 {
 string username;
+int hp, edpa, dpa, armour; 
+hp = 100;
+dpa
 cout<<"Welcome to The global warming game. Please enter your name: ";
 cin>>username;
+	cout<<"Hello "<<username<<", this is Polluter Combat Simulator or P.C.S. This is an early concept version of the game, and may not be fully functional. Nonetheless, enjoy. To start the game, you will fight a basic enemy.";
+	enemy (hp, edpa, "Rubble Rumbler", 15, 5, armour, username);
+	
+}
+int enemy (int hp, int edpa, string enemyname, int hp2, int dpa, int armour, string username) {
+	int pchoice;
+	cout<<"\nUh oh! You've come across a "<<enemyname<<"! It has "<<hp2<<" health. FIGHT!";
+	while (hp>0 && hp2>0) {
+		cout<<"\n"<<username<<", your move. 1: Attack, 2: Block (1/2 dmg)";
+		cin>>pchoice;
+		if (pchoice==1) {
+			cout<<"\nYou attack dealing "<<dpa<<" damage";
+				hp2-=dpa;
+		}
+		else if (pchoice==2)
+		{
+			cout<<"\nYou raise your defenses...";
+		}
+		else {
+			cout<<"\nYou hesitate, giving the "<<enemyname<<" time to attack. (Invalid input)";
+		}
+		cout<<"\nThe "<<enemyname<<" attacks, dealing "<<edpa<<" damage";
+		hp -= (edpa - armour);
+	}
+	if (hp<=0) {
+		cout<<"\nYou lost...";
+	}
+	else {
+		cout<<"\nYou defeated the enemy "<<enemyname;
+	}
 }
