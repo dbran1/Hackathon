@@ -123,7 +123,7 @@ ARMOR SETS / TEMPLATE
 *  Rotsuit Gloves                 1 Point/s
 *  Rotsuit Sabatons               2 Point/s  Total: 14 Points
 
-3 Bonesuit Armor
+4 Bonesuit Armor
 *  Rotsuit Chestplate             5 Point/s
 *  Rotsuit Shoulderplate          4 Point/s
 *  Rotsuit Headshield             3 Point/s
@@ -219,26 +219,40 @@ Fusionaire's Greatsword      Damage: 1255
 #include <ctime>        //*******
 #include <iostream>     //****
 #include <unistd.h>     //*
+#include <math.h>
 using namespace std;
 ///////////////////////////////////////////////////////
-int enemy (int hp, int edpa, string enemyname, int hp2, int dpa, int armour, string username);
+int enemy (int &hp, int edpa, string enemyname, int hp2, int &dpa, int &armour, string username, int bosscounter, int &boots, int &helmet, int &gloves, int &cplate, int &shoulders);
+void loot (int &armour, int &dpa, int &cplate, int &shoulders, int &boots, int &gloves, int &helmet);
 int main() 
 {
 string username;
-int hp, edpa, dpa, armour; 
+int hp, edpa, dpa, armour, bosscounter, bkilled, cplate, shoulders, boots, gloves, helmet; 
+bkilled = 0;
+bosscounter = 0;
 hp = 100;
-dpa
-cout<<"Welcome to The global warming game. Please enter your name: ";
+dpa = 5;
+cplate = 0;
+shoulders = 0;
+helmet = 0;
+gloves = 0;
+boots = 0;
+armour = cplate + shoulders + helmet + gloves + boots;
+cout<<"Welcome to PCS... The first ever  [  P O L L U T E R    C O M B A T    S I M U L A T O R  ]";
+cout<<"\nPlease enter your name soldier: ";
 cin>>username;
-	cout<<"Hello "<<username<<", this is Polluter Combat Simulator or P.C.S. This is an early concept version of the game, and may not be fully functional. Nonetheless, enjoy. To start the game, you will fight a basic enemy.";
-	enemy (hp, edpa, "Rubble Rumbler", 15, 5, armour, username);
-	
+	cout<<"Greetings "<<username<<", this is the Polluter Combat Simulator or P.C.S. This is an early concept version of the game, and may not be fully functional. Nevertheless, godspeed and good luck. To start the game, you will first fight a basic enemy. The RUBBLE RUMBLER !\n\n";
+	bosscounter = enemy (hp, 5, "Rubble Rumbler", 15, dpa, armour, username, bosscounter, boots, helmet, gloves, cplate, shoulders);
+	while (hp>0)
+		{
+			
+		}
 }
-int enemy (int hp, int edpa, string enemyname, int hp2, int dpa, int armour, string username) {
+int enemy (int &hp, int edpa, string enemyname, int hp2, int &dpa, int &armour, string username, int bosscounter, int &boots, int &helmet, int &gloves, int &cplate, int &shoulders) {
 	int pchoice;
 	cout<<"\nUh oh! You've come across a "<<enemyname<<"! It has "<<hp2<<" health. FIGHT!";
 	while (hp>0 && hp2>0) {
-		cout<<"\n"<<username<<", your move. 1: Attack, 2: Block (1/2 dmg)";
+		cout<<"\n"<<username<<", your move. 1: Attack, 2: Block (1/2 dmg) ";
 		cin>>pchoice;
 		if (pchoice==1) {
 			cout<<"\nYou attack dealing "<<dpa<<" damage";
@@ -247,17 +261,148 @@ int enemy (int hp, int edpa, string enemyname, int hp2, int dpa, int armour, str
 		else if (pchoice==2)
 		{
 			cout<<"\nYou raise your defenses...";
+			armour=armour+floor(edpa/2);
 		}
 		else {
 			cout<<"\nYou hesitate, giving the "<<enemyname<<" time to attack. (Invalid input)";
 		}
-		cout<<"\nThe "<<enemyname<<" attacks, dealing "<<edpa<<" damage";
-		hp -= (edpa - armour);
+			hp -= (edpa - armour);
+		cout<<"\nThe "<<enemyname<<" attacks, dealing "<<edpa<<" damage. You have "<<hp<<" hp left!\n"<<hp2;
 	}
 	if (hp<=0) {
 		cout<<"\nYou lost...";
+		bosscounter=0;
 	}
-	else {
+	else if (hp2<=0) {
 		cout<<"\nYou defeated the enemy "<<enemyname;
+		bosscounter++;
+		loot (armour, dpa, cplate, shoulders, boots, gloves, helmet);
 	}
+	return(bosscounter);
+}
+void loot (int &armour, int &dpa, int &cplate, int &shoulders, int &boot, int &glove, int &helmet)
+{
+	int i, n, ltier, ltype, weapons[14]={0,1,2,3,4,5,6,7,8,9,10,11,12,13}, helmets[9]={1,2,3,3,5,10,15,15,45}, chestplate[9]={2,3,5,5,5,10,10,25,50}, shoulderplate[9]={1,2,3,4,5,10,20,20,50}, gloves[9]={1,1,1,2,3,5,10,15,30}, boots[9]={1,1,2,2,3,5,10,15,30}, drops;
+	string drop;
+	srand((int)time(0));
+	n = rand()%4;
+	for (i=0;i<n;i++) {
+		ltier = rand()%900+1;
+		ltype = rand()%6+1;
+		//Set drop var equal to drop name you want
+		if (ltype == 1 && helmet == 0)
+		{
+			if (ltier<=500) {
+				helmet = helmets[0];
+			}
+			else if (ltier<=750)
+			{
+				helmet = helmets[1];
+			}
+			else if (ltier<=875)
+			{
+				helmet = helmets[2];
+			}
+			else if (ltier<=900)
+			{
+				helmet = helmets[3];
+			}
+			else {
+				cout<<"You already have a helmet... don't be wasteful! We're fighting pollution and littering does not help!";
+			}
+		}
+		else if (ltype == 2 && boot == 0) {
+			if (ltier<=500) {
+				boot = boots[0];
+			}
+			else if (ltier<=750)
+			{
+				boot = boots[1];
+			}
+			else if (ltier<=875)
+			{
+				boot = boots[2];
+			}
+			else if (ltier<=900)
+			{
+				boot = boots[3];
+			}
+			else {
+				cout<<"You already have boots... don't be wasteful! We're fighting pollution and littering does not help!";
+			}
+	}
+		else if (ltype == 3 && glove == 0) {
+			if (ltier<=500) {
+				glove = gloves[0];
+			}
+			else if (ltier<=750)
+			{
+				glove = gloves[1];
+			}
+			else if (ltier<=875)
+			{
+				glove = gloves[2];
+			}
+			else if (ltier<=900)
+			{
+				glove = gloves[3];
+			}
+			else {
+				cout<<"You already have gloves... don't be wasteful! We're fighting pollution and littering does not help!";
+			}
+	}
+		else if (ltype == 4 && cplate == 0) {
+			if (ltier<=500) {
+				cplate = chestplate[0];
+			}
+			else if (ltier<=750)
+			{
+				cplate = chestplate[1];
+			}
+			else if (ltier<=875)
+			{
+				cplate = chestplate[2];
+			}
+			else if (ltier<=900)
+			{
+				cplate = chestplate[3];
+			}
+			else {
+				cout<<"You already have a chestplate... don't be wasteful! We're fighting pollution and littering does not help!";
+			}
+	}
+		else if (ltype == 5 && shoulders == 0) {
+			if (ltier<=500) {
+				shoulders = shoulderplate[0];
+			}
+			else if (ltier<=750)
+			{
+				shoulders = shoulderplate[1];
+			}
+			else if (ltier<=875)
+			{
+				shoulders = shoulderplate[2];
+			}
+			else if (ltier<=900)
+			{
+				shoulders = shoulderplate[3];
+			}
+			else {
+				cout<<"You already have a shoulderplate... don't be wasteful! We're fighting pollution and littering does not help!";
+			}
+	}
+		else if (ltype == 5 && dpa == 5)
+		{
+			if (ltier<=675)
+			{
+				dpa=15;
+			}
+			else if (ltier<=900)
+			{
+				dpa=20;
+			}
+		}
+  //  Tier 1: 1-500 Tier 2: 501-750 Tier 3: 751-875 Tier 4: 876-900   //
+	}
+	armour=boot+glove+cplate+shoulders+helmet;
 }
