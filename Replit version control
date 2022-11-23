@@ -212,7 +212,6 @@ Fusionaire's Greatsword      Damage: 1255
 //  Example: First Counter [2 items], Second Counter [Weapon, Gloves], Third Counter [Fossilized Pike, Earthburn Shoulderplate]  //
 //  We might remove the first counter and make it a constant, depending on the boss fought or enemies fought.  //
 //  Enemy List: First Enemy, Bosses, Enemies in between bosses.  //
-
 //  Foundations Library //*****************************
 #include <cmath>        //****************
 #include <cstdlib>      //***********
@@ -222,12 +221,13 @@ Fusionaire's Greatsword      Damage: 1255
 #include <math.h>
 using namespace std;
 ///////////////////////////////////////////////////////
-int enemy (int &hp, int edpa, string enemyname, int hp2, int &dpa, int &armour, string username, int bosscounter, int &boots, int &helmet, int &gloves, int &cplate, int &shoulders);
+void enemy (int &hp, int edpa, string enemyname, int hp2, int &dpa, int &armour, string username, int &bosscounter, int &boots, int &helmet, int &gloves, int &cplate, int &shoulders);
 void loot (int &armour, int &dpa, int &cplate, int &shoulders, int &boots, int &gloves, int &helmet);
+
 int main() 
 {
-string username;
-int hp, edpa, dpa, armour, bosscounter, bkilled, cplate, shoulders, boots, gloves, helmet; 
+string username="hi";
+int hp, edpa, dpa, armour, bosscounter, bkilled, cplate, shoulders, boots, gloves, helmet, sleep, time, bchance, bosschance, bencounter; 
 bkilled = 0;
 bosscounter = 0;
 hp = 100;
@@ -242,21 +242,43 @@ cout<<"Welcome to PCS... The first ever  [  P O L L U T E R    C O M B A T    S 
 cout<<"\nPlease enter your name soldier: ";
 cin>>username;
 	cout<<"Greetings "<<username<<", this is the Polluter Combat Simulator or P.C.S. This is an early concept version of the game, and may not be fully functional. Nevertheless, godspeed and good luck. To start the game, you will first fight a basic enemy. The RUBBLE RUMBLER !\n\n";
-	bosscounter = enemy (hp, 5, "Rubble Rumbler", 15, dpa, armour, username, bosscounter, boots, helmet, gloves, cplate, shoulders);
+ enemy (hp, 5, "Rubble Rumbler", 15, dpa, armour, username, bosscounter, boots, helmet, gloves, cplate, shoulders);
 	while (hp>0)
 		{
-			
+			cout<<"\nWould you like to sleep (heal)? 0: No 1: Yes ";
+			cin>>sleep;
+			if (sleep == 1)
+			{
+				cout<<"\nFor how long? (min 2, max 20 each 2 is 5 hp) ";
+					cin>>time;
+				hp=hp+(time/2*5);
+				if (hp>100) {
+					hp=100;
+				}
+					bosscounter= bosscounter + ceil(time/10);
+			}
+			else {}
+			bchance = bosscounter*10;
+			bencounter = rand()%100+1;
+			if (bencounter<=bchance||time>20)
+			{
+				enemy (hp, 30, "LUDKOS: HUMANITY’S SCOURGE", 75, dpa, armour, username, bosscounter, boots, helmet, gloves, cplate, shoulders);
+			}
+			else 
+			{
+				enemy (hp, 5, "Rubble Rumbler", 15, dpa, armour, username, bosscounter, boots, helmet, gloves, cplate, shoulders);
+			}
 		}
 }
-int enemy (int &hp, int edpa, string enemyname, int hp2, int &dpa, int &armour, string username, int bosscounter, int &boots, int &helmet, int &gloves, int &cplate, int &shoulders) {
+void enemy (int &hp, int edpa, string enemyname, int hp2, int &dpa, int &armour, string username, int &bosscounter, int &boots, int &helmet, int &gloves, int &cplate, int &shoulders) {
 	int pchoice;
 	cout<<"\nUh oh! You've come across a "<<enemyname<<"! It has "<<hp2<<" health. FIGHT!";
 	while (hp>0 && hp2>0) {
 		cout<<"\n"<<username<<", your move. 1: Attack, 2: Block (1/2 dmg) ";
 		cin>>pchoice;
 		if (pchoice==1) {
-			cout<<"\nYou attack dealing "<<dpa<<" damage";
-				hp2-=dpa;
+			hp2-=dpa;
+			cout<<"\nYou attack dealing "<<dpa<<" damage. "<<enemyname<<" has "<<hp2<<" health left!";
 		}
 		else if (pchoice==2)
 		{
@@ -266,27 +288,33 @@ int enemy (int &hp, int edpa, string enemyname, int hp2, int &dpa, int &armour, 
 		else {
 			cout<<"\nYou hesitate, giving the "<<enemyname<<" time to attack. (Invalid input)";
 		}
+		if (hp2>0 ) {
 			hp -= (edpa - armour);
-		cout<<"\nThe "<<enemyname<<" attacks, dealing "<<edpa<<" damage. You have "<<hp<<" hp left!\n"<<hp2;
+			if (edpa<0)
+			{
+				edpa=1;
+			}
+		cout<<"\nThe "<<enemyname<<" attacks, dealing "<<edpa-armour<<" damage. You have "<<hp<<" hp left!";
+			}
+		else {}
 	}
-	if (hp<=0) {
-		cout<<"\nYou lost...";
-		bosscounter=0;
-	}
-	else if (hp2<=0) {
+	if (hp!=0&&hp>0) {
 		cout<<"\nYou defeated the enemy "<<enemyname;
 		bosscounter++;
 		loot (armour, dpa, cplate, shoulders, boots, gloves, helmet);
+	}
+		else {
+			cout<<"\nYou lost...";
+			bosscounter=0;
 	}
 	return(bosscounter);
 }
 void loot (int &armour, int &dpa, int &cplate, int &shoulders, int &boot, int &glove, int &helmet)
 {
 	int i, n, ltier, ltype, weapons[14]={0,1,2,3,4,5,6,7,8,9,10,11,12,13}, helmets[9]={1,2,3,3,5,10,15,15,45}, chestplate[9]={2,3,5,5,5,10,10,25,50}, shoulderplate[9]={1,2,3,4,5,10,20,20,50}, gloves[9]={1,1,1,2,3,5,10,15,30}, boots[9]={1,1,2,2,3,5,10,15,30}, drops;
-	string drop;
 	srand((int)time(0));
-	n = rand()%4;
-	for (i=0;i<n;i++) {
+	n = rand()%3+1;
+	for (i=0;i<=n;i++) {
 		ltier = rand()%900+1;
 		ltype = rand()%6+1;
 		//Set drop var equal to drop name you want
@@ -294,112 +322,134 @@ void loot (int &armour, int &dpa, int &cplate, int &shoulders, int &boot, int &g
 		{
 			if (ltier<=500) {
 				helmet = helmets[0];
+				cout<<"\nYou got a Concrete Headshield!";
 			}
 			else if (ltier<=750)
 			{
 				helmet = helmets[1];
+				cout<<"\nYou got a Recycled Plastic Helmet!";
 			}
 			else if (ltier<=875)
 			{
 				helmet = helmets[2];
+				cout<<"\nYou got a Rotsuit Headshield!";
 			}
 			else if (ltier<=900)
 			{
 				helmet = helmets[3];
+				cout<<"\nYou got a Bonesuit Headshield!";
 			}
 			else {
-				cout<<"You already have a helmet... don't be wasteful! We're fighting pollution and littering does not help!";
+				cout<<"\nYou already have a helmet... don't be wasteful! We're fighting pollution and littering does not help!";
 			}
 		}
 		else if (ltype == 2 && boot == 0) {
 			if (ltier<=500) {
 				boot = boots[0];
+				cout<<"\nYou got Concrete Sabatons!";
 			}
 			else if (ltier<=750)
 			{
 				boot = boots[1];
+				cout<<"\nYou got a Recycled Plastic Boots!";
 			}
 			else if (ltier<=875)
 			{
 				boot = boots[2];
+				cout<<"\nYou got a Rotsuit Sabatons!";
 			}
 			else if (ltier<=900)
 			{
 				boot = boots[3];
+				cout<<"\nYou got a Bonesuit Greaves!";
 			}
 			else {
-				cout<<"You already have boots... don't be wasteful! We're fighting pollution and littering does not help!";
+				cout<<"\nYou already have boots... don't be wasteful! We're fighting pollution and littering does not help!";
 			}
 	}
 		else if (ltype == 3 && glove == 0) {
 			if (ltier<=500) {
 				glove = gloves[0];
+				cout<<"\nYou got Concrete Gauntlets!";
 			}
 			else if (ltier<=750)
 			{
 				glove = gloves[1];
+				cout<<"\nYou got Recycled Plastic Gauntlets!";
 			}
 			else if (ltier<=875)
 			{
 				glove = gloves[2];
+				cout<<"\nYou got Rotsuit Gloves!";
 			}
 			else if (ltier<=900)
 			{
 				glove = gloves[3];
+				cout<<"\nYou got Bonesuit Gloves!";
 			}
 			else {
-				cout<<"You already have gloves... don't be wasteful! We're fighting pollution and littering does not help!";
+				cout<<"\nYou already have gloves... don't be wasteful! We're fighting pollution and littering does not help!";
 			}
 	}
 		else if (ltype == 4 && cplate == 0) {
 			if (ltier<=500) {
 				cplate = chestplate[0];
+				cout<<"\nYou got a Concrete Chestplate!";
 			}
 			else if (ltier<=750)
 			{
 				cplate = chestplate[1];
+				cout<<"\nYou got a Recycled Plastic Aegis!";
 			}
 			else if (ltier<=875)
 			{
 				cplate = chestplate[2];
+				cout<<"\nYou got a Rotsuit Breastplate!";
 			}
 			else if (ltier<=900)
 			{
 				cplate = chestplate[3];
+				cout<<"\nYou got a Bonesuit Chestplate!";
 			}
 			else {
-				cout<<"You already have a chestplate... don't be wasteful! We're fighting pollution and littering does not help!";
+				cout<<"\nYou already have a chestplate... don't be wasteful! We're fighting pollution and littering does not help!";
 			}
 	}
 		else if (ltype == 5 && shoulders == 0) {
 			if (ltier<=500) {
 				shoulders = shoulderplate[0];
+				cout<<"\nYou got a Concrete Shoulderplate!";
 			}
 			else if (ltier<=750)
 			{
 				shoulders = shoulderplate[1];
+				cout<<"\nYou got a Plastic Pauldron!";
 			}
 			else if (ltier<=875)
 			{
 				shoulders = shoulderplate[2];
+				cout<<"\nYou got a Rotsuit Shoulderplate!";
 			}
 			else if (ltier<=900)
 			{
 				shoulders = shoulderplate[3];
+				cout<<"\nYou got a Bonesuit Shoulderplate!";
 			}
 			else {
-				cout<<"You already have a shoulderplate... don't be wasteful! We're fighting pollution and littering does not help!";
+				cout<<"\nYou already have a shoulderplate... don't be wasteful! We're fighting pollution and littering does not help!";
 			}
 	}
-		else if (ltype == 5 && dpa == 5)
+		else if (ltype == 6 && dpa == 5)
 		{
 			if (ltier<=675)
 			{
 				dpa=15;
+				cout<<"\nYou got a Rebar Club!";
 			}
 			else if (ltier<=900)
 			{
 				dpa=20;
+				cout<<"\nYou got a Synthesized Alloy Dagger!";
 			}
 		}
   //  Tier 1: 1-500 Tier 2: 501-750 Tier 3: 751-875 Tier 4: 876-900   //
